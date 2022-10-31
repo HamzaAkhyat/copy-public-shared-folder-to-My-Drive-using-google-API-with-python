@@ -9,7 +9,6 @@ drive = ferst_auth()
 service = second_auth()
 # 
 
-
 Files_paths_List = []
 Files_id_List = []
 
@@ -35,12 +34,6 @@ def get_path_subfolders_and_files (Shared_Folder_Id,name):
     return subfolders_paths
 
 
-
-
-        
-   
-
-      
 
 def copy_files_to_MyDrive(file_id,parent_folder_id,file_Name) :
    
@@ -82,10 +75,6 @@ def Get_Id_From_Link (Folder_link):
  
 
 
-
-
-
-
 def Creat_Subfolder_path_inside_MyDrive (name,parents):
 
 
@@ -101,8 +90,6 @@ def Creat_Subfolder_path_inside_MyDrive (name,parents):
 
     else :
         try:
-            
-            
             file_metadata = {
 
             'name':name,
@@ -113,6 +100,7 @@ def Creat_Subfolder_path_inside_MyDrive (name,parents):
             print('ereur : ' +str(e))   
 
      
+    
     folder_id = service.files().create(body=file_metadata).execute()
  
     previeus_folder_id = folder_id.get('id')    
@@ -129,12 +117,12 @@ def Check_subfolder_exect_inside_Mydrive(folder_path,MyFolder_Id) :
     
     folder_already_exect = False;
     
-   
     parent_id = MyFolder_Id
 
     split_path = folder_path.split('/')
     
     i = 0
+    
     for folder_name in split_path:
         
         file1 = open('path.txt', 'r')
@@ -144,13 +132,9 @@ def Check_subfolder_exect_inside_Mydrive(folder_path,MyFolder_Id) :
         for line in Lines:
            
             exected_folder = line.split(':')
-
-            
-
             
             if(split_path[i] == exected_folder[0] ):
 
-               
                 folder_already_exect = True
                 exected_folder[1]=exected_folder[1].replace('\n','')
                 parent_id = exected_folder[1]
@@ -159,13 +143,11 @@ def Check_subfolder_exect_inside_Mydrive(folder_path,MyFolder_Id) :
             else:
                 
                 folder_already_exect=False   
-            
-                
-                
 
         if (folder_already_exect == False):
            
-            parent_id=Creat_Subfolder_path_inside_MyDrive(folder_name,parent_id)
+            parent_id=Creat_Subfolder_path_inside_MyDrive(folder_name,parent_id)        
+            
         i=i+1          
             
 
@@ -199,10 +181,10 @@ def start_copying_file_to_MyDrive(file_path):
 
 
 
-
-
-
-    
+                
+                
+                
+                
 if __name__ == '__main__':
    
     Shared_folder_Link = input('Enter Link to public folder you want to copy : ')
@@ -228,14 +210,14 @@ if __name__ == '__main__':
     
             
     print("Folder tree structure Copied successfuly")
-    print("Start Copying ...")
+    print("Start Copying Files into your Drive...")
 
     for file_path in Files_paths_List :    
         start_copying_file_to_MyDrive(file_path)
 
     print("Files Copied successfuly")
 
-    print ('shared Folder "'+ New_Shared_Folder_Name +'" Copied successfuly ' )
+    print ('shared Folder "'+ New_Shared_Folder_Name +'" Copied successfuly \n' )
     
 
 
